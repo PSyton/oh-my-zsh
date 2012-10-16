@@ -66,6 +66,15 @@ git_prompt_status() {
   if $(echo "$INDEX" | grep '^UU ' &> /dev/null); then
     STATUS="$ZSH_THEME_GIT_PROMPT_UNMERGED$STATUS"
   fi
+  # is anything staged?
+  if $(echo "$INDEX" | grep -E -e '^(D[ M]|[MARC][ MD]) ' &> /dev/null); then
+    STATUS="$ZSH_THEME_GIT_PROMPT_STAGED$STATUS"
+  fi
+  # is anything unstaged?
+  if $(echo "$INDEX" | grep -E -e '^[ MARC][MD] ' &> /dev/null); then
+    STATUS="$ZSH_THEME_GIT_PROMPT_UNSTAGED$STATUS"
+  fi
+
   echo $STATUS
 }
 
